@@ -16,7 +16,7 @@
 
 ## Overview
 
-The Lost Object Memory System is a local, single-camera prototype for helping someone remember where a wallet was last seen. An ESP32-S3-CAM sends an image to a Flask server. The server forwards it to a hosted Roboflow workflow, saves the result and image locally, and makes recent detections available to a browser dashboard.
+The Lost Object Memory System is a local, single-camera prototype for helping someone remember where a wallet was last seen. An ESP32-S3-N16R8 board paired with an OV3660 camera sends an image to a Flask server. The server forwards it to a hosted Roboflow workflow, saves the result and image locally, and makes recent detections available to a browser dashboard.
 
 The project's main focus is the end-to-end lost-object memory workflow: camera capture, wallet recognition, a timestamped history, and a simple view of the latest result. It is not a general object-search service or a hosted multi-user application.
 
@@ -34,7 +34,7 @@ The dashboard includes a saved light/dark theme, live server status, detection t
 
 ```mermaid
 flowchart LR
-    Camera[ESP32-S3-CAM] -->|POST image| Upload[Flask /upload]
+    Camera[ESP32-S3-N16R8 + OV3660] -->|POST image| Upload[Flask /upload]
     Upload --> Inference[Roboflow hosted workflow]
     Inference --> Save[SQLite + local captured image]
     Save --> API[Flask dashboard API]
@@ -46,6 +46,15 @@ flowchart LR
 3. The server selects the best wallet prediction at or above the configured confidence threshold and stores the result in SQLite.
 4. The dashboard requests `/api/dashboard` every three seconds and displays the latest capture, summary statistics, and recent records.
 
+## Hardware
+
+| Component | Role in the project |
+| --- | --- |
+| **ESP32-S3-N16R8** | Camera controller and Wi-Fi device. The firmware captures an image and sends it to the local Flask server's `/upload` endpoint. |
+| **OV3660** | Camera sensor used to capture the wallet scene that is passed to the detection workflow. |
+
+The main camera sketch is [`OV3660_Camera_Test.ino.ino`](ESP32_Codes/OV3660_Camera_Test.ino.ino); additional ESP32 test and backup sketches are in [`ESP32_Codes/`](ESP32_Codes/).
+
 ## Custom Wallet Detection model
 
 The project uses a hosted Roboflow workflow named `custom-wallet-detection`. The screenshot below shows the wallet image dataset and annotated examples used with the custom model.
@@ -54,7 +63,7 @@ The project uses a hosted Roboflow workflow named `custom-wallet-detection`. The
   <img src="docs/screenshots/roboflow-custom-wallet-dataset.png" alt="Roboflow dataset for the Custom Wallet Detection model, showing wallet images and annotations" width="100%">
 </p>
 
-When the ESP32-S3-CAM posts an image to Flask's `/upload` route, Flask saves the image locally and sends it to the Roboflow workflow. The server reads `ROBOFLOW_API_KEY` from its environment and sends it in the request header; the key is not included in this repository. A result counts as a wallet detection only when the predicted class is `wallet` and its confidence is at least `0.50` (the current `CONFIDENCE_THRESHOLD`). Flask saves the detection details and raw Roboflow response in `Database/lost_objects.db`, while the original uploaded image remains in `Captured_Images/`. The dashboard then reads the saved detection history through Flask's API.
+When the ESP32-S3-N16R8 with its OV3660 camera posts an image to Flask's `/upload` route, Flask saves the image locally and sends it to the Roboflow workflow. The server reads `ROBOFLOW_API_KEY` from its environment and sends it in the request header; the key is not included in this repository. A result counts as a wallet detection only when the predicted class is `wallet` and its confidence is at least `0.50` (the current `CONFIDENCE_THRESHOLD`). Flask saves the detection details and raw Roboflow response in `Database/lost_objects.db`, while the original uploaded image remains in `Captured_Images/`. The dashboard then reads the saved detection history through Flask's API.
 
 ## Built with
 
@@ -62,9 +71,9 @@ When the ESP32-S3-CAM posts an image to Flask's `/upload` route, Flask saves the
 - **Roboflow Inference SDK** for hosted wallet detection
 - **SQLite** for persistent detection history
 - **HTML, CSS, and vanilla JavaScript** for the responsive dashboard, themes, and transitions
-- **ESP32-S3-CAM** as the image-capture device
+- **ESP32-S3-N16R8** board and **OV3660** camera for image capture and upload
 
-The camera firmware and Roboflow workflow are managed separately and are not included in this repository. Training datasets, model weights, captured camera images, and local database files are also intentionally excluded.
+The Roboflow workflow is managed separately and is not included in this repository. Training datasets, model weights, captured camera images, and local database files are also intentionally excluded.
 
 ## Project layout
 
