@@ -70,6 +70,7 @@ The camera firmware and Roboflow workflow are managed separately and are not inc
 
 ```text
 Lost-Object-Memory-System/
+├── ESP32_Codes/              # ESP32 camera, test, and backup sketches
 ├── Python_Server/
 │   ├── app.py                 # Flask server, image upload, inference, and APIs
 │   └── database.py            # Optional standalone database initializer
@@ -83,7 +84,9 @@ Lost-Object-Memory-System/
 ├── requirements.txt
 └── README.md
 ```
-## Arduino Latest Code Used : OV3660_Camera_Test.ino (Others are also included which was also tested before implementing last code for camera)
+## ESP32 camera code
+
+The current camera sketch is [`OV3660_Camera_Test.ino.ino`](ESP32_Codes/OV3660_Camera_Test.ino.ino). The other ESP32 test and backup sketches are in the same [`ESP32_Codes/`](ESP32_Codes/) folder.
 ## Run locally on Windows
 
 ### 1. Install the requirements
