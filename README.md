@@ -135,4 +135,4 @@ Keep the API key in the environment rather than in these settings.
 
 This repository contains application source and blurred dashboard screenshots, not personal detection records. `.gitignore` excludes local virtual environments, API-key files, captured images, SQLite databases, datasets, model weights, and local test artifacts.
 
-Before sharing screenshots or changing the repository's visibility, check that they do not reveal private camera images or personal information. Never commit your Roboflow API key.
+Before, sharing screenshots or changing the repository's visibility, check that they do not reveal private camera images or personal information. Never commit your Roboflow API key.
