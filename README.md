@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="Website/static/img/brand-mark.svg" alt="" width="76">
+  <img src="Website/static/img/brand-mark.svg" alt="Lost Object Memory System wallet camera logo" width="92">
 </p>
 
 <h1 align="center">Lost Object Memory System</h1>
@@ -46,6 +46,18 @@ flowchart LR
     Inference --> Save[SQLite + local captured image]
     Save --> API[Flask dashboard API]
     API -->|polls every 3 seconds| UI[Browser dashboard]
+
+    classDef device fill:#e0f2fe,stroke:#0284c7,color:#0c4a6e,stroke-width:2px
+    classDef server fill:#dcfce7,stroke:#16a34a,color:#14532d,stroke-width:2px
+    classDef model fill:#f3e8ff,stroke:#9333ea,color:#581c87,stroke-width:2px
+    classDef storage fill:#fef3c7,stroke:#d97706,color:#78350f,stroke-width:2px
+    classDef dashboard fill:#ffe4e6,stroke:#e11d48,color:#881337,stroke-width:2px
+
+    class Camera device
+    class Upload,API server
+    class Inference model
+    class Save storage
+    class UI dashboard
 ```
 
 1. The camera uploads a JPEG image to `/upload`.
