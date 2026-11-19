@@ -5,7 +5,7 @@
 <h1 align="center">Lost Object Memory System</h1>
 
 <p align="center">
-  A camera-assisted dashboard that records when a wallet is detected and where it was seen.
+  A local camera-to-dashboard prototype that uses an ESP32-S3-N16R8, an OV3660 camera, and Roboflow to recognize a wallet and record where it was seen.
 </p>
 
 <p align="center">
@@ -19,6 +19,13 @@
 The Lost Object Memory System is a local, single-camera prototype for helping someone remember where a wallet was last seen. An ESP32-S3-N16R8 board paired with an OV3660 camera sends an image to a Flask server. The server forwards it to a hosted Roboflow workflow, saves the result and image locally, and makes recent detections available to a browser dashboard.
 
 The project's main focus is the end-to-end lost-object memory workflow: camera capture, wallet recognition, a timestamped history, and a simple view of the latest result. It is not a general object-search service or a hosted multi-user application.
+
+## Project highlights
+
+- **Camera-to-inference pipeline:** The ESP32-S3-N16R8 and OV3660 capture images that Flask sends to the hosted Roboflow workflow.
+- **Focused recognition:** The current custom model is configured for wallet detection, with a confidence threshold to determine accepted predictions.
+- **Local object memory:** Captured images and detection results are saved locally and surfaced in the dashboard's recent history.
+- **Clear prototype scope:** This is a local, single-camera project; additional object datasets, models, and object-selection controls are planned.
 
 ## Dashboard
 
@@ -103,9 +110,7 @@ Lost-Object-Memory-System/
 ├── requirements.txt
 └── README.md
 ```
-## ESP32 camera code
 
-The current camera sketch is [`OV3660_Camera_Test.ino.ino`](ESP32_Codes/OV3660_Camera_Test.ino.ino). The other ESP32 test and backup sketches are in the same [`ESP32_Codes/`](ESP32_Codes/) folder.
 ## Run locally on Windows
 
 ### 1. Install the requirements
