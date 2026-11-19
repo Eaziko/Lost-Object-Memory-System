@@ -73,7 +73,7 @@ Lost-Object-Memory-System/
 ├── requirements.txt
 └── README.md
 ```
-
+## Arduino Latest Code Used : OV3660_Camera_Test.ino (Others are also included which was also tested before implementing last code for camera)
 ## Run locally on Windows
 
 ### 1. Install the requirements
