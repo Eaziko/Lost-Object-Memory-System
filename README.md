@@ -65,6 +65,16 @@ The project uses a hosted Roboflow workflow named `custom-wallet-detection`. The
 
 When the ESP32-S3-N16R8 with its OV3660 camera posts an image to Flask's `/upload` route, Flask saves the image locally and sends it to the Roboflow workflow. The server reads `ROBOFLOW_API_KEY` from its environment and sends it in the request header; the key is not included in this repository. A result counts as a wallet detection only when the predicted class is `wallet` and its confidence is at least `0.50` (the current `CONFIDENCE_THRESHOLD`). Flask saves the detection details and raw Roboflow response in `Database/lost_objects.db`, while the original uploaded image remains in `Captured_Images/`. The dashboard then reads the saved detection history through Flask's API.
 
+## Future development
+
+The current prototype focuses on detecting one object: a wallet, using one hosted custom model. Limited hardware resources and the small amount of labeled training data currently available make this focused approach practical for the project.
+
+As the project grows, we plan to:
+
+- Build labeled datasets for additional object categories and use them to train and test new models.
+- Add a dashboard control to select one object or multiple supported objects to detect.
+- Extend the inference workflow to use the selected objects while continuing to record results in the detection history.
+
 ## Built with
 
 - **Python 3.11** and **Flask** for the local web server and JSON endpoints
