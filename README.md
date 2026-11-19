@@ -46,6 +46,16 @@ flowchart LR
 3. The server selects the best wallet prediction at or above the configured confidence threshold and stores the result in SQLite.
 4. The dashboard requests `/api/dashboard` every three seconds and displays the latest capture, summary statistics, and recent records.
 
+## Custom Wallet Detection model
+
+The project uses a hosted Roboflow workflow named `custom-wallet-detection`. The screenshot below shows the wallet image dataset and annotated examples used with the custom model.
+
+<p align="center">
+  <img src="docs/screenshots/roboflow-custom-wallet-dataset.png" alt="Roboflow dataset for the Custom Wallet Detection model, showing wallet images and annotations" width="100%">
+</p>
+
+When the ESP32-S3-CAM posts an image to Flask's `/upload` route, Flask saves the image locally and sends it to the Roboflow workflow. The server reads `ROBOFLOW_API_KEY` from its environment and sends it in the request header; the key is not included in this repository. A result counts as a wallet detection only when the predicted class is `wallet` and its confidence is at least `0.50` (the current `CONFIDENCE_THRESHOLD`). Flask saves the detection details and raw Roboflow response in `Database/lost_objects.db`, while the original uploaded image remains in `Captured_Images/`. The dashboard then reads the saved detection history through Flask's API.
+
 ## Built with
 
 - **Python 3.11** and **Flask** for the local web server and JSON endpoints
@@ -69,7 +79,7 @@ Lost-Object-Memory-System/
 │       ├── css/style.css      # Responsive light/dark themes and animations
 │       ├── js/dashboard.js    # Dashboard polling and rendering
 │       └── img/brand-mark.svg
-├── docs/screenshots/          # Privacy-blurred dashboard screenshots
+├── docs/screenshots/          # Dashboard and Roboflow dataset screenshots
 ├── requirements.txt
 └── README.md
 ```
@@ -133,6 +143,6 @@ Keep the API key in the environment rather than in these settings.
 
 ## Privacy and repository contents
 
-This repository contains application source and blurred dashboard screenshots, not personal detection records. `.gitignore` excludes local virtual environments, API-key files, captured images, SQLite databases, datasets, model weights, and local test artifacts.
+This repository contains application source and documentation screenshots, not the local detection database. `.gitignore` excludes local virtual environments, API-key files, captured images, SQLite databases, datasets, model weights, and local test artifacts.
 
-Before, sharing screenshots or changing the repository's visibility, check that they do not reveal private camera images or personal information. Never commit your Roboflow API key.
+Before sharing screenshots or changing the repository's visibility, check that they do not reveal private camera images or personal information. The Roboflow screenshot contains example wallet images from the dataset. Never commit your Roboflow API key.
