@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none">
+  <defs>
+    <linearGradient id="tile" x1="13" y1="8" x2="112" y2="121" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#173d4a"/>
+      <stop offset="1" stop-color="#172943"/>
+    </linearGradient>
+    <linearGradient id="mint" x1="36" y1="36" x2="92" y2="91" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#b6fff1"/>
+      <stop offset=".52" stop-color="#6de0d2"/>
+      <stop offset="1" stop-color="#82aaff"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0" cy="0" r="1" gradientTransform="matrix(0 72 -72 0 64 25)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6de0d2" stop-opacity=".2"/>
+      <stop offset="1" stop-color="#6de0d2" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect x="4" y="4" width="120" height="120" rx="34" fill="#0b1422"/>
+  <rect x="5" y="5" width="118" height="118" rx="33" fill="url(#tile)" stroke="#6de0d2" stroke-opacity=".35" stroke-width="2"/>
+  <rect x="6" y="6" width="116" height="116" rx="32" fill="url(#glow)"/>
+  <path d="M32 47V37a5 5 0 0 1 5-5h10M96 47V37a5 5 0 0 0-5-5H81M32 81v10a5 5 0 0 0 5 5h10M96 81v10a5 5 0 0 1-5 5H81" stroke="url(#mint)" stroke-linecap="round" stroke-width="4"/>
+  <path d="M42 47.5h39a7.5 7.5 0 0 1 7.5 7.5v25a7.5 7.5 0 0 1-7.5 7.5H47a7 7 0 0 1-7-7v-28a5 5 0 0 1 5-5Z" fill="#0c1a28" stroke="url(#mint)" stroke-linejoin="round" stroke-width="3"/>
+  <path d="M42 55h40a7 7 0 0 1 7 7v3H72a8 8 0 0 0 0 16h17" stroke="url(#mint)" stroke-linecap="round" stroke-linejoin="round" stroke-width="3"/>
+  <path d="M70 66h20v14H70a7 7 0 0 1 0-14Z" fill="#173c47" stroke="#6de0d2" stroke-width="2"/>
+  <circle cx="75" cy="73" r="2.5" fill="#b6fff1"/>
+  <circle cx="99" cy="43" r="3" fill="#b6fff1"/>
+</svg>

@@ -1,0 +1,31 @@
+# Python environments and generated files
+.venv/
+**/.venv/
+**/.venv*/
+__pycache__/
+*.py[cod]
+
+# Secrets and local editor settings
+.env
+.env.*
+!.env.example
+.vscode/
+
+# Local data and model artifacts
+/Captured_Images/
+/Database/
+/Logs/
+/Wallet_Dataset/
+/Custom_Wallet_Dataset/
+/Python_Server/runs/
+*.db
+*.db-shm
+*.db-wal
+*.pt
+
+# Local-only instructions and test artifacts
+/README!.txt
+/Python_Server/roboflow_test.py
+/Python_Server/test_detection.py
+/Python_Server/test.jpg
+/Python_Server/test_wallet.jpg

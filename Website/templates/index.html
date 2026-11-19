@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080d17">
+    <meta name="description" content="A live dashboard for your AI-powered lost object memory system.">
+    <title>Lost Object Memory | Smart Detection</title>
+    <script>
+        try {
+            const savedTheme = localStorage.getItem("lost-object-theme");
+            if (savedTheme === "light" || savedTheme === "dark") {
+                document.documentElement.dataset.theme = savedTheme;
+            }
+        } catch (error) {
+            console.warn("Theme preference could not be read:", error);
+        }
+    </script>
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='img/brand-mark.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+<div class="toast-region" id="toastRegion" aria-live="polite" aria-relevant="additions"></div>
+
+<div class="layout">
+
+    <aside class="sidebar">
+        <div class="brand">
+            <img
+                class="brand-icon"
+                src="{{ url_for('static', filename='img/brand-mark.svg') }}"
+                alt=""
+                aria-hidden="true"
+            >
+            <div>
+                <h2>Lost Object</h2>
+                <span>MEMORY SYSTEM</span>
+            </div>
+        </div>
+
+        <nav>
+            <a class="nav-item active" href="#overview">▦ &nbsp; Overview</a>
+            <a class="nav-item" href="#camera">◉ &nbsp; Camera Monitor</a>
+            <a class="nav-item" href="#history">▤ &nbsp; Detection History</a>
+        </nav>
+
+        <div class="sidebar-bottom">
+            <span class="online-dot"></span>
+            <span>AI Monitoring System</span>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+            <div>
+                <h1>Dashboard Overview</h1>
+                <p>Monitor your AI-powered lost object detection system.</p>
+            </div>
+
+            <div class="topbar-actions">
+                <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch to light theme">
+                    <span class="theme-icon" aria-hidden="true">☀</span>
+                    <span class="theme-label">Light mode</span>
+                </button>
+                <div class="server-status">
+                    <span class="online-dot" id="statusDot"></span>
+                    <span id="serverStatus">Checking server...</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="welcome">
+            <div>
+                <span class="eyebrow">SMART OBJECT MONITORING</span>
+                <h2>Lost Object Memory System</h2>
+                <p>Your personal AI-powered object detection platform.</p>
+            </div>
+            <div class="welcome-icon" aria-hidden="true">
+                <img
+                    src="{{ url_for('static', filename='img/brand-mark.svg') }}"
+                    alt=""
+                >
+            </div>
+        </section>
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <span class="stat-label">TOTAL DETECTIONS</span>
+                <h2 id="totalDetections">--</h2>
+                <span class="stat-description">Recorded in database</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">TODAY'S DETECTIONS</span>
+                <h2 id="todayDetections">--</h2>
+                <span class="stat-description">Detections today</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">AVERAGE CONFIDENCE</span>
+                <h2 id="averageConfidence">--</h2>
+                <span class="stat-description">AI detection accuracy score</span>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">CAMERA LOCATION</span>
+                <h2 id="cameraLocation">Bedroom</h2>
+                <span class="stat-description">ESP32-S3-CAM</span>
+            </div>
+
+        </section>
+
+        <section class="content-grid" id="overview">
+
+            <div class="panel latest-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Latest Detection</h3>
+                        <p>Most recent AI recognition result</p>
+                    </div>
+                    <span class="live-label">LIVE</span>
+                </div>
+
+                <div class="latest-details">
+                    <div>
+                        <span class="muted-label">OBJECT</span>
+                        <h2 id="latestObject">Loading...</h2>
+                    </div>
+                    <div>
+                        <span class="muted-label">LOCATION</span>
+                        <h2 id="latestLocation">--</h2>
+                    </div>
+                    <div>
+                        <span class="muted-label">CONFIDENCE</span>
+                        <h2 id="latestConfidence">--</h2>
+                    </div>
+                    <div>
+                        <span class="muted-label">LAST DETECTED</span>
+                        <h2 class="date-value" id="latestTime">--</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel camera-panel" id="camera">
+                <div class="panel-heading">
+                    <div>
+                        <h3>Latest Camera Capture</h3>
+                        <p>Most recently uploaded image</p>
+                    </div>
+                    <span class="camera-label">BEDROOM CAM</span>
+                </div>
+
+                <div class="camera-image">
+                    <img id="latestImage" alt="Latest camera capture">
+                    <div id="imagePlaceholder">Waiting for camera image...</div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="panel history-panel" id="history">
+            <div class="panel-heading">
+                <div>
+                    <h3>Recent Detection History</h3>
+                    <p>Latest records from your SQLite database</p>
+                </div>
+                <button onclick="loadDashboard()">Refresh Data ↻</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>OBJECT</th>
+                            <th>CONFIDENCE</th>
+                            <th>LOCATION</th>
+                            <th>DATE & TIME</th>
+                            <th>STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="historyTable">
+                        <tr>
+                            <td colspan="6">Loading detection records...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            Lost Object Memory System · AI Powered by Roboflow · ESP32-S3-CAM
+        </footer>
+
+    </main>
+</div>
+
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+</body>
+</html>
