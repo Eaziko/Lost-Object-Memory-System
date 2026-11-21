@@ -3,7 +3,7 @@
 #include <WebServer.h>
 
 const char* apName = "LostObject_Test";
-const char* apPassword = "lost";
+const char* apPassword = "lost12345";
 
 WebServer server(80);
 
