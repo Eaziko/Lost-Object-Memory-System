@@ -43,7 +43,7 @@ void setup() {
   Serial.begin(115200);
   delay(1500);
 
-  Serial.println("LOST OBJECT MEMORY SYSTEM");
+  Serial.println("LOST OBJECT MEMORY SYSTEMS");
   connectWiFi();
 }
 
