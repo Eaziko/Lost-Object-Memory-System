@@ -104,7 +104,7 @@ As the project grows, we plan to:
 
 The Roboflow workflow is managed separately and is not included in this repository. Training datasets, model weights, captured camera images, and local database files are also intentionally excluded.
 
-## Project layout
+## Project layout:
 
 ```text
 Lost-Object-Memory-System/
