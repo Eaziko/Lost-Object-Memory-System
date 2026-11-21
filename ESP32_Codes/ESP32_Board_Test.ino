@@ -95,12 +95,12 @@ void loop() {
     return;
   }
 
-  Serial.println("------------------------------");
+  Serial.println("----------------------------------");
   Serial.println("IMAGE CAPTURE SUCCESSFUL!");
   Serial.printf("Image size: %u bytes\n", frame->len);
   Serial.printf("Resolution: %u x %u\n",
                 frame->width, frame->height);
-  Serial.println("------------------------------");
+  Serial.println("----------------------------------");
 
   esp_camera_fb_return(frame);
 
